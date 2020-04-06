@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import Geolocation from '@react-native-community/geolocation';
 import {
   SafeAreaView,
   StyleSheet,
@@ -28,55 +27,23 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-class GeolocationExample extends React.Component<
-  {},
-  $FlowFixMeState,
-> {
-  state = {
-    initialPosition: 'unknown',
-    lastPosition: 'unknown',
-  };
-
-  watchID: ?number = null;
-
-  componentDidMount() {
-    Geolocation.getCurrentPosition(
-      position => {
-        const initialPosition = JSON.stringify(position);
-        this.setState({initialPosition});
-      },
-      error => Alert.alert('Error', JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-    );
-    this.watchID = Geolocation.watchPosition(position => {
-      const lastPosition = JSON.stringify(position);
-      this.setState({lastPosition});
-    });
-  }
-
-  componentWillUnmount() {
-    this.watchID != null && Geolocation.clearWatch(this.watchID);
-  }
-
-  render() {
-    return (
-      <View>
-        <Text>
-          <Text style={styles.title}>Initial position: </Text>
-          {this.state.initialPosition}
-        </Text>
-        <Text>
-          <Text style={styles.title}>Current position: </Text>
-          {this.state.lastPosition}
-        </Text>
-      </View>
-    );
-  }
-}
-
+import Geolocation from 'react-native-geolocation-service';
 const locationAccessPermissionRequest = async() => {
     try {
-        const granted = await PermissionsAndroid.request(
+        if(Platform.OS === "ios") {
+          Geolocation.requestAuthorization();
+          // Geolocation.getCurrentPosition(
+          //   (position) => {
+          //       console.log(position);
+          //   },
+          //   (error) => {
+          //     console.log("map error: ",error);
+          //       console.log(error.code, error.message);
+          //   },
+          //   { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
+          // );
+        } else {
+          const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
                 title: "Blah blah bullshit",
@@ -85,12 +52,14 @@ const locationAccessPermissionRequest = async() => {
                 butonNegative: "No",
                 buttonPositive: "yes",
             }
-        );
-        if (granted == PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("yes");
-        } else {
-            console.log("no");
+          );
+          if (granted == PermissionsAndroid.RESULTS.GRANTED) {
+              console.log("yes");
+          } else {
+              console.log("no");
+          }
         }
+        
     } catch (err) {
         console.log(err);
     }
