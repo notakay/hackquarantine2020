@@ -6,6 +6,9 @@
  * @flow strict-local
  */
 
+import database from '@react-native-firebase/database';
+const reference = database().ref('/users/123');
+
 import React from 'react';
 import {
   SafeAreaView,
@@ -65,6 +68,24 @@ const locationAccessPermissionRequest = async() => {
     }
 }
 
+const getLocation = async () => {
+  Geolocation.getCurrentPosition(
+    (position) => {
+      console.log(position);
+      database()
+            .ref('/locations/')
+            .set({
+                thing: position,
+            }).then(() => console.log('Data set.'));
+    },
+    (error) => {
+      console.log(error);
+    },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000, distanceFilter: 50, forceRequestLocation: true }
+  );
+}
+
+
 const App: () => React$Node = () => {
   return (
     <>
@@ -83,7 +104,9 @@ const App: () => React$Node = () => {
               <Button
                 title="Send location lol" 
                 onPress={locationAccessPermissionRequest} />
-              <GeolocationExample />
+              <Button
+                title="Send location lol2" 
+                onPress={getLocation} />
             </View>
           </View>
         </ScrollView>
