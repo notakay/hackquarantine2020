@@ -37,7 +37,7 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationAlwaysUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>blah blah blahs dashfubkasjdoia</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>blah blah blahs dashfubkasjdoia</string>
