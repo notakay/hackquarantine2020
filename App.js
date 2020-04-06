@@ -35,7 +35,7 @@ const locationAccessPermissionRequest = async() => {
           Geolocation.requestAuthorization();
           Geolocation.getCurrentPosition(
             (position) => {
-                console.log(position);
+              console.log(position);
             },
             (error) => {
               console.log("map error: ",error);
