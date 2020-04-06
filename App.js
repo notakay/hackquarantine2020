@@ -31,20 +31,21 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Geolocation from 'react-native-geolocation-service';
+
 const locationAccessPermissionRequest = async() => {
     try {
         if(Platform.OS === "ios") {
           Geolocation.requestAuthorization();
-          // Geolocation.getCurrentPosition(
-          //   (position) => {
-          //       console.log(position);
-          //   },
-          //   (error) => {
-          //     console.log("map error: ",error);
-          //       console.log(error.code, error.message);
-          //   },
-          //   { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
-          // );
+          Geolocation.getCurrentPosition(
+            (position) => {
+              console.log(position);
+            },
+            (error) => {
+              console.log("map error: ",error);
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
+          );
         } else {
           const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
