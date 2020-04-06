@@ -27,9 +27,24 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Geolocation from 'react-native-geolocation-service';
+
 const locationAccessPermissionRequest = async() => {
     try {
-        const granted = await PermissionsAndroid.request(
+        if(Platform.OS === "ios") {
+          Geolocation.requestAuthorization();
+          // Geolocation.getCurrentPosition(
+          //   (position) => {
+          //       console.log(position);
+          //   },
+          //   (error) => {
+          //     console.log("map error: ",error);
+          //       console.log(error.code, error.message);
+          //   },
+          //   { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
+          // );
+        } else {
+          const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
                 title: "Blah blah bullshit",
@@ -38,12 +53,14 @@ const locationAccessPermissionRequest = async() => {
                 butonNegative: "No",
                 buttonPositive: "yes",
             }
-        );
-        if (granted == PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("yes");
-        } else {
-            console.log("no");
+          );
+          if (granted == PermissionsAndroid.RESULTS.GRANTED) {
+              console.log("yes");
+          } else {
+              console.log("no");
+          }
         }
+        
     } catch (err) {
         console.log(err);
     }

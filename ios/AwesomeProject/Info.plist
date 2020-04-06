@@ -38,9 +38,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>STUFF</string>
+	<string>blah blah blahs dashfubkasjdoia</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>STUFF</string>
+	<string>blah blah blahs dashfubkasjdoia</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
