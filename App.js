@@ -28,7 +28,6 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Geolocation from 'react-native-geolocation-service';
-
 const locationAccessPermissionRequest = async() => {
     try {
         if(Platform.OS === "ios") {
@@ -84,6 +83,7 @@ const App: () => React$Node = () => {
               <Button
                 title="Send location lol" 
                 onPress={locationAccessPermissionRequest} />
+              <GeolocationExample />
             </View>
           </View>
         </ScrollView>
